@@ -19,5 +19,5 @@ from routes import api_routes
 
 app.register_blueprint(api_routes)
 
-if __name__ == '__main__':
-  app.run()
+if __name__ == "__main__":
+    app.run()
