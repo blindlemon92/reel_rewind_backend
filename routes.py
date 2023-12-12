@@ -1,4 +1,3 @@
-import logging
 import os
 from dotenv import load_dotenv
 from flask import Blueprint, jsonify, abort, request
@@ -18,18 +17,14 @@ def validate_token(token):
             public_key = serialization.load_pem_public_key(
                 key_file.read(), backend=default_backend()
             )
-        logging.info(f"Token: {token}")
-        logging.info(f"Public key: {public_key}")
         expected_audience = os.environ["EXPECTED_AUDIENCE"]
         decoded_jwt = decode(
             token, public_key, algorithms=["RS256"], audience=expected_audience
         )
         return decoded_jwt
     except ExpiredSignatureError:
-        logging.error("Token is expired")
         return None
     except PyJWTError as e:
-        logging.error(f"An error occurred while decoding the token: {e}")
         return None
 
 
